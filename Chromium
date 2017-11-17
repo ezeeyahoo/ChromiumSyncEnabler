@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# Set up environment variables
+export GOOGLE_API_KEY="GAK"
+export GOOGLE_DEFAULT_CLIENT_ID="GDCI"
+export GOOGLE_DEFAULT_CLIENT_SECRET="GDCS"
+
+# Launch Chromium
+/Applications/Chromium.app/Contents/MacOS/Chromium_orig_bin
