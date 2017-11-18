@@ -1,6 +1,7 @@
 #! /usr/local/bin/python3
 
 import os
+import stat
 
 
 def get_keys(con_msg, length):
@@ -26,19 +27,16 @@ def custom_user(app_bin):
     while(True):
 
         print('App not found at /Applications')
-        opt = input('Do you want to install for specific user (y/n) ')
+        opt = input('Do you want to install for current user only (y/n) ')
 
         if opt.lower() in ('n', 'no'):
             return 0
 
         opt = input('Current user detected as ' + user +
-                    ', Do you want to change? [y/N] ').strip()
+                    ', Do you want to continue [y/N] ').strip()
 
-        if opt.lower() in ['y', 'n', 'yes', 'no', '']:
-
-            if opt.lower() == 'y':
-                user = input('Enter User Name: ')
-            return(['/User/' + user + '/Applications/Chromium.app/'])
+        if opt.lower() in ['y', 'yes']:
+            return('/User/' + user + '/Applications/Chromium.app/')
 
         print('Wrong input, Try Again')
         continue
@@ -49,35 +47,36 @@ def generate_new_launcher():
     GAK = ""
     GDCI = ""
     GDCS = ""
-    app_name = ['Chromium']
-    app_dir = ['/Applications/Chromium.app/']
-    app_bin = [app_dir, ['Contents/MacOS/Chromium']]
-    renamed_app_bin = [app_bin, '_orig_bin']
-    new_launcher = os.path.join(os.getcwd(), *app_name)
+    app_name = 'Chromium'
+    template_name = 'Chromium_template'
+    app_dir = '/Applications/Chromium.app/'
+    app_bin = [app_dir, 'Contents/MacOS/Chromium']
+    rename_app_bin = [app_bin, '_orig_bin']
+    launcher_format = os.path.join(os.getcwd(), template_name)
+    new_launcher = os.path.join(os.getcwd(), *[app_name])
 
-    if not os.path.exists(new_launcher):
-        print(new_launcher)
-        return 0
-
+    # Check if not application is installed at root i.e /Applications
     if not os.path.exists(os.path.join(*app_dir)):
-        app_dir = custom_user(app_bin)
+        app_dir = custom_user(app_bin)  # Provide custom user
+        print(app_bin)
+        assert not os.path.isabs(app_dir)
 
+    # Enter required keys
     GAK = get_keys('Enter Google API key: ', 39)
 
     GDCI = get_keys('Enter Google Default Client ID: ', 72)
 
     GDCS = get_keys('Enter Google Default Client Secret: ', 24)
-    print(os.path.join(''.join(app_bin)))
-    if os.path.exists(os.path.join(*app_bin)):
 
-        if not os.path.exists(os.path.join(*renamed_app_bin)):
-            try:
-                os.rename(os.path.join(*app_bin),
-                          os.path.join(*renamed_app_bin))
-            except OSError:
-                print('Cannot rename, OSError')
+    app_bin = os.path.join(*app_bin)
 
-        if os.path.exists(os.path.join(*renamed_app_bin)):
+    # Check if original binary exists
+    if os.path.exists(app_bin):
+
+        renamed_app_bin = os.path.join(
+            *rename_app_bin[0]) + rename_app_bin[1]
+
+        if os.path.exists(renamed_app_bin):
             opt = input(
                 'Do you want to overwrite previous sync activation(Y/n) '
             ).lower()
@@ -85,29 +84,48 @@ def generate_new_launcher():
             if opt in ('no', 'n'):
                 return 0
 
-        with open(new_launcher, 'r') as read_cursor:
+        if not os.path.exists(renamed_app_bin):
+            try:
+                os.rename(app_bin, renamed_app_bin)
+            except IOError:
+                print('Cannot rename, OSError')
+                return None
+
+        with open(launcher_format, 'r') as read_cursor:
             data = read_cursor.read()
             data = data.replace('GAK', GAK)
             data = data.replace('GDCI', GDCI)
             data = data.replace('GDCS', GDCS)
+            data = data.replace(
+                'INSTALL_PATH', os.path.dirname(app_bin))
 
         with open(new_launcher, 'w') as write_cursor:
             write_cursor.write(data)
 
+        if 'User' not in app_bin:
+            os.chmod(new_launcher, stat.S_IRWXU | stat.S_IXGRP | stat.S_IXOTH)
+
         # Move new_launcher
-        os.rename(new_launcher, os.path.join(app_bin))
+        os.rename(new_launcher, app_bin)
         return True
     return -1
 
 
 if __name__ == '__main__':
+
     status = generate_new_launcher()
+
+    if status is None:
+        print('Close App and retry')
+        exit(1)
 
     if not status:
         print('Exit')
+        exit(0)
 
     if status == -1:
         print('Original binary missing! Reinstall App or report bug')
+        exit(1)
 
     if status:
         print('Sync Activated ')
