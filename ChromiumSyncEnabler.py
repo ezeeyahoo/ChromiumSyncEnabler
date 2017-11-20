@@ -12,7 +12,7 @@ def get_keys(con_msg, length):
 
         if key is None:
             continue
-        # print(len(key))
+
         if len(key) != length:
             print("Enter correctly")
             continue
@@ -21,25 +21,30 @@ def get_keys(con_msg, length):
     return key
 
 
-def custom_user(app_bin):
+def custom_install(app_bin):
 
     user = os.getenv('USER')
-    while(True):
+    print('App not found at /Applications')
 
-        print('App not found at /Applications')
-        opt = input('Do you want to install for current user only (y/n) ')
+    while(True):
+        opt = input('Did you install Chromium for specific user? (y/n) '
+                    ).strip()
 
         if opt.lower() in ('n', 'no'):
             return 0
 
-        opt = input('Current user detected as ' + user +
-                    ', Do you want to continue [y/N] ').strip()
-
-        if opt.lower() in ['y', 'yes']:
-            return('/User/' + user + '/Applications/Chromium.app/')
+        if opt.lower() in ('y', 'yes'):
+            break
 
         print('Wrong input, Try Again')
         continue
+
+    opt = input('Current user detected as ' + user +
+                ', Do you want to continue [y/N] ').strip()
+
+    if opt.lower() in ['y', 'yes']:
+        return('/Users/' + user + '/Applications/Chromium.app/')
+    return 0
 
 
 def generate_new_launcher():
@@ -49,17 +54,21 @@ def generate_new_launcher():
     GDCS = ""
     app_name = 'Chromium'
     template_name = 'Chromium_template'
-    app_dir = '/Applications/Chromium.app/'
-    app_bin = [app_dir, 'Contents/MacOS/Chromium']
+    app_dir = ['/Applications/Chromium.app/']
+    app_bin = [app_dir, ['Contents/MacOS/Chromium']]
     rename_app_bin = [app_bin, '_orig_bin']
     launcher_format = os.path.join(os.getcwd(), template_name)
     new_launcher = os.path.join(os.getcwd(), *[app_name])
 
     # Check if not application is installed at root i.e /Applications
     if not os.path.exists(os.path.join(*app_dir)):
-        app_dir = custom_user(app_bin)  # Provide custom user
-        print(app_bin)
-        assert not os.path.isabs(app_dir)
+        app_dir = custom_install(app_bin)  # Provide custom user
+
+        if app_dir == 0:
+            return 0
+
+        assert not os.path.isdir(os.path.join(
+            *[x for sublist in app_bin for x in sublist]))
 
     # Enter required keys
     GAK = get_keys('Enter Google API key: ', 39)
@@ -68,13 +77,13 @@ def generate_new_launcher():
 
     GDCS = get_keys('Enter Google Default Client Secret: ', 24)
 
-    app_bin = os.path.join(*app_bin)
+    app_bin = os.path.join(*[x for sublist in app_bin for x in sublist])
 
     # Check if original binary exists
     if os.path.exists(app_bin):
-
         renamed_app_bin = os.path.join(
-            *rename_app_bin[0]) + rename_app_bin[1]
+            *[x for sublist in rename_app_bin[0] for x in sublist]
+        ) + rename_app_bin[1]
 
         if os.path.exists(renamed_app_bin):
             opt = input(
