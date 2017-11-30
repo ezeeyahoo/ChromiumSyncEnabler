@@ -43,7 +43,7 @@ def custom_install(app_bin):
                 ', Do you want to continue [y/N] ').strip()
 
     if opt.lower() in ['y', 'yes']:
-        return('/Users/' + user + '/Applications/Chromium.app/')
+        return(['/Users/' + user + '/Applications/Chromium.app/'])
     return 0
 
 
@@ -55,7 +55,8 @@ def generate_new_launcher():
     app_name = 'Chromium'
     template_name = 'Chromium_template'
     app_dir = ['/Applications/Chromium.app/']
-    app_bin = [app_dir, ['Contents/MacOS/Chromium']]
+    bin_rel_path = ['Contents/MacOS/Chromium']
+    app_bin = [app_dir, bin_rel_path]
     rename_app_bin = [app_bin, '_orig_bin']
     launcher_format = os.path.join(os.getcwd(), template_name)
     new_launcher = os.path.join(os.getcwd(), *[app_name])
@@ -67,8 +68,20 @@ def generate_new_launcher():
         if app_dir == 0:
             return 0
 
-        assert not os.path.isdir(os.path.join(
-            *[x for sublist in app_bin for x in sublist]))
+        app_bin = [app_dir, bin_rel_path]
+        rename_app_bin = [app_bin, '_orig_bin']
+
+    renamed_app_bin = os.path.join(
+        *[x for sublist in rename_app_bin[0] for x in sublist]
+    ) + rename_app_bin[1]
+
+    if os.path.exists(renamed_app_bin):
+        opt = input(
+            'Do you want to overwrite previous sync activation(Y/n) '
+        ).lower()
+
+        if opt in ('no', 'n'):
+            return 0
 
     # Enter required keys
     GAK = get_keys('Enter Google API key: ', 39)
@@ -81,17 +94,6 @@ def generate_new_launcher():
 
     # Check if original binary exists
     if os.path.exists(app_bin):
-        renamed_app_bin = os.path.join(
-            *[x for sublist in rename_app_bin[0] for x in sublist]
-        ) + rename_app_bin[1]
-
-        if os.path.exists(renamed_app_bin):
-            opt = input(
-                'Do you want to overwrite previous sync activation(Y/n) '
-            ).lower()
-
-            if opt in ('no', 'n'):
-                return 0
 
         if not os.path.exists(renamed_app_bin):
             try:
@@ -111,6 +113,8 @@ def generate_new_launcher():
         with open(new_launcher, 'w') as write_cursor:
             write_cursor.write(data)
 
+        os.chmod(new_launcher, stat.S_IRWXU)
+
         if 'User' not in app_bin:
             os.chmod(new_launcher, stat.S_IRWXU | stat.S_IXGRP | stat.S_IXOTH)
 
@@ -121,6 +125,15 @@ def generate_new_launcher():
 
 
 if __name__ == '__main__':
+
+    print('''
+    NOTE:-
+    1) If app is installed both User level and system level, only system level\
+ is activated
+
+    2) If you move Chromium.app from /Applications to $HOME/Applications or \
+vice versa. Re-run for re-activation!
+        ''')
 
     status = generate_new_launcher()
 
