@@ -1,5 +1,5 @@
 # ChromiumSyncEnabler
-Secured way to enable sync for official/non-official and stable/non-stable version of Chromium on Mac while keeping APIs safe, wihtout globally exposing keys.
+Secured way to enable sync for official/non-official(local build) and stable/non-stable version of Chromium on Mac while keeping APIs safe, without globally exposing keys.
 
 # How to run
 
