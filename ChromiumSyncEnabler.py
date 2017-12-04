@@ -1,14 +1,42 @@
-#! /usr/local/bin/python3
+"""
+GitHub Repo> https://github.com/ezeeyahoo/ChromiumSyncEnabler
+
+Summary: Secured way to enable sync for official/non-official and
+stable/non-stable version of Chromium on Mac while keeping APIs safe,
+wihtout globally exposing keys.
+
+How to run:-
+------------
+Check repo for clear instructions.
+
+"""
+from __future__ import print_function
+
+from getpass import getpass as input_h
 
 import os
 import stat
 
+try:
+    if raw_input:
+        input = raw_input
+except NameError:
+    pass
+
 
 def get_keys(con_msg, length):
+    """Acquire Keys and validation
 
+    Args:
+        con_msg (string): console message
+        length (int): required length of the keys
+
+    Returns:
+        key: Google API keys
+    """
     while(True):
 
-        key = input(con_msg).strip()
+        key = input_h(prompt=con_msg).strip()
 
         if key is None:
             continue
@@ -22,7 +50,14 @@ def get_keys(con_msg, length):
 
 
 def custom_install(app_bin):
+    """For user specific installation
 
+    Args:
+        app_bin (string): absolute path to app binary.
+
+    Returns:
+        app_dir: path to app
+    """
     user = os.getenv('USER')
     print('App not found at /Applications')
 
@@ -48,7 +83,11 @@ def custom_install(app_bin):
 
 
 def generate_new_launcher():
+    """generate a custom launcher and place it next to app binary
 
+    Returns:
+        status: return or exit status
+    """
     GAK = ""
     GDCI = ""
     GDCS = ""
@@ -101,7 +140,7 @@ def generate_new_launcher():
             except IOError:
                 print('Cannot rename, OSError')
                 return None
-
+        # Preparing template
         with open(launcher_format, 'r') as read_cursor:
             data = read_cursor.read()
             data = data.replace('GAK', GAK)
