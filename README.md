@@ -5,7 +5,7 @@ Secured way to enable sync for official/non-official(local build) and stable/non
 
 Before running, you must have Google API keys [(steps 6 to 10)](https://gist.github.com/ezeeyahoo/dc4bdd250c6c6468959e107ddaef53f4)
 
-Install Chromium. You can get it from [macchrome](https://github.com/macchrome/) repo.
+Install Chromium. You can get it from [macchrome](https://github.com/macchrome/) repo.(check sync/nosync in the names)
 
 ```bash
 git clone https://github.com/ezeeyahoo/ChromiumSyncEnabler.git
