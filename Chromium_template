@@ -6,4 +6,4 @@ export GOOGLE_DEFAULT_CLIENT_ID="GDCI"
 export GOOGLE_DEFAULT_CLIENT_SECRET="GDCS"
 
 # Launch Chromium
-INSTALL_PATH/Chromium_orig_bin
+exec .INSTALL_PATH/Chromium_orig_bin "$@"
