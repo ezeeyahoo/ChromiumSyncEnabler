@@ -49,7 +49,7 @@ def get_keys(con_msg, length):
     return key
 
 
-def custom_install(app_bin):
+def custom_install(app_dir, app_bin):
     """For user specific installation
 
     Args:
@@ -59,6 +59,7 @@ def custom_install(app_bin):
         app_dir: path to app
     """
     user = os.getenv('USER')
+    user_home = os.getenv('HOME')
     print('App not found at /Applications')
 
     while(True):
@@ -78,7 +79,7 @@ def custom_install(app_bin):
                 ', Do you want to continue [y/N] ').strip()
 
     if opt.lower() in ['y', 'yes']:
-        return(['/Users/' + user + '/Applications/Chromium.app/'])
+        return([user_home + app_dir.pop()])
     return 0
 
 
@@ -96,19 +97,20 @@ def generate_new_launcher():
     app_dir = ['/Applications/Chromium.app/']
     bin_rel_path = ['Contents/MacOS/Chromium']
     app_bin = [app_dir, bin_rel_path]
-    rename_app_bin = [app_bin, '_orig_bin']
+    orig_suffix = '_orig_bin'
+    rename_app_bin = [app_bin, orig_suffix]
     launcher_format = os.path.join(os.getcwd(), template_name)
     new_launcher = os.path.join(os.getcwd(), *[app_name])
 
     # Check if not application is installed at root i.e /Applications
     if not os.path.exists(os.path.join(*app_dir)):
-        app_dir = custom_install(app_bin)  # Provide custom user
+        app_dir = custom_install(app_dir, app_bin)  # Provide custom user
 
         if app_dir == 0:
             return 0
 
         app_bin = [app_dir, bin_rel_path]
-        rename_app_bin = [app_bin, '_orig_bin']
+        rename_app_bin = [app_bin, orig_suffix]
 
     renamed_app_bin = os.path.join(
         *[x for sublist in rename_app_bin[0] for x in sublist]
