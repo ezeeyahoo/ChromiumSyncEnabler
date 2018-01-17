@@ -5,7 +5,14 @@ Secured way to enable sync for official/non-official(local build) and stable/non
 
 Before running, you must have Google API keys [(steps 6 to 10)](https://gist.github.com/ezeeyahoo/dc4bdd250c6c6468959e107ddaef53f4)
 
-Install Chromium. You can get it from [macchrome](https://github.com/macchrome/) repo.(check sync/nosync in the names)
+You can also use keys used in chromium for linux platform:-
+```bash
+export GOOGLE_API_KEY="AIzaSyCkfPOPZXDKNn8hhgu3JrA62wIgC93d44k"
+export GOOGLE_DEFAULT_CLIENT_ID="811574891467.apps.googleusercontent.com"
+export GOOGLE_DEFAULT_CLIENT_SECRET="kdloedMFGdGla2P1zacGjAQh"
+```
+
+Install Chromium. You can get it from [macchrome](https://github.com/macchrome/) repo. Any version will do, should not be NOSYNC(check sync/nosync in the names)
 
 ```bash
 git clone https://github.com/ezeeyahoo/ChromiumSyncEnabler.git
@@ -20,6 +27,8 @@ OR
 ```bash
 python3 ./ChromiumSyncEnabler.py
 ```
+
+NOTE: If you relocate app to $HOME or /Applications then re-run to reactivate.
 
 Follow on-screen instructions
 
