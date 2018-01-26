@@ -24,12 +24,12 @@ except NameError:
     pass
 
 
-def get_keys(con_msg, length):
+def get_keys(con_msg, lens):
     """Acquire Keys and validation
 
     Args:
         con_msg (string): console message
-        length (int): required length of the keys
+        lens (list): required length range of the keys
 
     Returns:
         key: Google API keys
@@ -41,8 +41,8 @@ def get_keys(con_msg, length):
         if key is None:
             continue
 
-        if len(key) != length:
-            print("Enter correctly")
+        if len(key) not in lens:
+            print("Enter correctly: invalid length")
             continue
 
         break
@@ -125,11 +125,11 @@ def generate_new_launcher():
             return 0
 
     # Enter required keys
-    GAK = get_keys('Enter Google API key: ', 39)
+    GAK = get_keys('Enter Google API key: ', [39])
 
-    GDCI = get_keys('Enter Google Default Client ID: ', 72)
+    GDCI = get_keys('Enter Google Default Client ID: ', list(range(70, 73)))
 
-    GDCS = get_keys('Enter Google Default Client Secret: ', 24)
+    GDCS = get_keys('Enter Google Default Client Secret: ', [24])
 
     app_bin = os.path.join(*[x for sublist in app_bin for x in sublist])
 
