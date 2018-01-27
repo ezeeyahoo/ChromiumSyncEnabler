@@ -49,7 +49,7 @@ def get_keys(console_msg, lens):
         if 'Google Default Client ID' in console_msg:
             # Additional check on Google Default Client ID
             if not re.match(
-                r'\d+-[A-Za-z0-9] +\.apps\.googleusercontent\.com$', key
+                r'\d+-[A-Za-z0-9]+\.apps\.googleusercontent\.com$', key
             ):
                 print('Not a valid key')
                 continue
