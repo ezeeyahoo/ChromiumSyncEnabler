@@ -28,7 +28,7 @@ OR
 python3 ./ChromiumSyncEnabler.py
 ```
 
-NOTE: If you relocate app to $HOME or /Applications then re-run to reactivate.
+NOTE: If you relocate app to $HOME/Applications or /Applications then re-run to reactivate.
 
 Follow on-screen instructions
 
