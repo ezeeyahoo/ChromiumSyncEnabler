@@ -12,10 +12,11 @@ Check repo for clear instructions.
 """
 from __future__ import print_function
 
-from getpass import getpass as input_h
+from getpass import getpass as input_key
 
 import os
 import stat
+import re
 
 try:
     if raw_input:
@@ -24,11 +25,11 @@ except NameError:
     pass
 
 
-def get_keys(con_msg, lens):
+def get_keys(console_msg, lens):
     """Acquire Keys and validation
 
     Args:
-        con_msg (string): console message
+        console_msg (string): console message for asking input
         lens (list): required length range of the keys
 
     Returns:
@@ -36,7 +37,7 @@ def get_keys(con_msg, lens):
     """
     while(True):
 
-        key = input_h(prompt=con_msg).strip()
+        key = input_key(prompt=console_msg).strip()
 
         if key is None:
             continue
@@ -128,8 +129,16 @@ def generate_new_launcher():
     GAK = get_keys('Enter Google API key: ', [39])
 
     GDCI = get_keys('Enter Google Default Client ID: ', list(range(70, 73)))
+    print(GDCI)
+    if not re.match(
+        r'\d+-[A-Za-z0-9] +\.apps\.googleusercontent\.com$', GDCI
+    ):
+        print('Hint: Google Default Client ID format xxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com')
+        return 0
 
     GDCS = get_keys('Enter Google Default Client Secret: ', [24])
+
+    # Additional check on Google Default Client ID
 
     app_bin = os.path.join(*[x for sublist in app_bin for x in sublist])
 
@@ -140,7 +149,7 @@ def generate_new_launcher():
             try:
                 os.rename(app_bin, renamed_app_bin)
             except IOError:
-                print('Cannot rename, OSError')
+                print('Cannot rename, Input Output Error')
                 return None
         # Preparing template
         with open(launcher_format, 'r') as read_cursor:
