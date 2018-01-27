@@ -46,6 +46,14 @@ def get_keys(console_msg, lens):
             print("Enter correctly: invalid length")
             continue
 
+        if 'Google Default Client ID' in console_msg:
+            # Additional check on Google Default Client ID
+            if not re.match(
+                r'\d+-[A-Za-z0-9] +\.apps\.googleusercontent\.com$', key
+            ):
+                print('Not a valid key')
+                continue
+
         break
     return key
 
@@ -129,16 +137,8 @@ def generate_new_launcher():
     GAK = get_keys('Enter Google API key: ', [39])
 
     GDCI = get_keys('Enter Google Default Client ID: ', list(range(70, 73)))
-    print(GDCI)
-    if not re.match(
-        r'\d+-[A-Za-z0-9] +\.apps\.googleusercontent\.com$', GDCI
-    ):
-        print('Hint: Google Default Client ID format xxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com')
-        return 0
 
     GDCS = get_keys('Enter Google Default Client Secret: ', [24])
-
-    # Additional check on Google Default Client ID
 
     app_bin = os.path.join(*[x for sublist in app_bin for x in sublist])
 
