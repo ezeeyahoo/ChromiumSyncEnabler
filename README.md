@@ -34,3 +34,7 @@ Follow on-screen instructions
 
 # Report Issues
 Write [here](https://github.com/ezeeyahoo/ChromiumSyncEnabler/issues)
+
+# To Do
+Py2App
+GUI
