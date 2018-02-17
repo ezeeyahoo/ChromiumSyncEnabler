@@ -1,0 +1,4 @@
+altgraph==0.15
+macholib==1.9
+modulegraph==0.16
+py2app==0.14

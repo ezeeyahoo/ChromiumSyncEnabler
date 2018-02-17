@@ -1,0 +1,60 @@
+{
+    "_meta": {
+        "hash": {
+            "sha256": "d1c9d88be1ff8c776f1a67e44bc86c0059c00c49aca51a855cd2579f3a8b9c80"
+        },
+        "host-environment-markers": {
+            "implementation_name": "cpython",
+            "implementation_version": "3.6.4",
+            "os_name": "posix",
+            "platform_machine": "x86_64",
+            "platform_python_implementation": "CPython",
+            "platform_release": "17.4.0",
+            "platform_system": "Darwin",
+            "platform_version": "Darwin Kernel Version 17.4.0: Sun Dec 17 09:19:54 PST 2017; root:xnu-4570.41.2~1/RELEASE_X86_64",
+            "python_full_version": "3.6.4",
+            "python_version": "3.6",
+            "sys_platform": "darwin"
+        },
+        "pipfile-spec": 6,
+        "requires": {},
+        "sources": [
+            {
+                "name": "pypi",
+                "url": "https://pypi.python.org/simple",
+                "verify_ssl": true
+            }
+        ]
+    },
+    "default": {
+        "altgraph": {
+            "hashes": [
+                "sha256:49dc134049903cc73fb76ca3cc9bef5b2b8c01c28732dd29594f99af2b449fc5",
+                "sha256:fc28b986a68fde8d3ff0e6d6ba3fbdd2cd562d11d45ef7c7735fbd826c9eec2e"
+            ],
+            "version": "==0.15"
+        },
+        "macholib": {
+            "hashes": [
+                "sha256:7f76a7ef4f58f85889dec25fb532bad5acfd461c444738dfeb2e7bf855d5906b",
+                "sha256:9aeec52d7da59912b15445d08b08d95cee48414f01dd035be06f04a825973c08"
+            ],
+            "version": "==1.9"
+        },
+        "modulegraph": {
+            "hashes": [
+                "sha256:3164e99c631e1301149db204f18e81fb3b8a6b2866637f77553520642d152d41",
+                "sha256:0ba04a67b65c936f707c76ffd819a52f370ff2bd36664338d53a9b271f23d1e4"
+            ],
+            "version": "==0.16"
+        },
+        "py2app": {
+            "hashes": [
+                "sha256:f0126503efaf83c169ba1ecf810917d762a2368559f40400e12bbede5d3dccb6",
+                "sha256:4dadf15d078a1748acba483c1abbb69a144a059e0c335a5e2a17b070d4cc938a"
+            ],
+            "version": "==0.14"
+        }
+    },
+    "develop": {}
+}
