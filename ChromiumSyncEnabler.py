@@ -136,7 +136,7 @@ def generate_new_launcher():
     # Enter required keys
     GAK = get_keys('Enter Google API key: ', [39])
 
-    GDCI = get_keys('Enter Google Default Client ID: ', list(range(70, 73)))
+    GDCI = get_keys('Enter Google Default Client ID: ', list(range(70, 75)))
 
     GDCS = get_keys('Enter Google Default Client Secret: ', [24])
 
