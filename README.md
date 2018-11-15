@@ -12,7 +12,20 @@ export GOOGLE_DEFAULT_CLIENT_ID="811574891467.apps.googleusercontent.com"
 export GOOGLE_DEFAULT_CLIENT_SECRET="kdloedMFGdGla2P1zacGjAQh"
 ```
 
-Install Chromium. You can get it from [macchrome](https://github.com/macchrome/) repo. Any version will do, should not be NOSYNC(check sync/nosync in the names)
+Install Chromium. 
+You can get it using brew (recommended no doubt)
+Stable release:-
+```
+brew cask install freesmug-chromium
+```
+Unstable release:-
+```
+brew cask install chromium
+```
+
+OR
+
+from [macchrome](https://github.com/macchrome/) repo. Any version will do, should not be NOSYNC(check sync/nosync in the names)
 
 ```bash
 git clone https://github.com/ezeeyahoo/ChromiumSyncEnabler.git
