@@ -32,12 +32,12 @@ git clone https://github.com/ezeeyahoo/ChromiumSyncEnabler.git
 cd ChromiumSyncEnabler
 ```
 
-Run using python on Mac, e.g.:-
+Run using python 3 on Mac, e.g.:-
 ```bash
-python3 ./ChromiumSyncEnabler.py
+python ./ChromiumSyncEnabler.py
 ```
 
-NOTE: If you relocate app to $HOME/Applications or /Applications then re-run to reactivate.
+# NOTE: If you relocate app to $HOME/Applications or /Applications then re-run to reactivate.
 
 Follow on-screen instructions
 
