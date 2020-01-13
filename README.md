@@ -32,11 +32,7 @@ git clone https://github.com/ezeeyahoo/ChromiumSyncEnabler.git
 cd ChromiumSyncEnabler
 ```
 
-Run using any python on Mac, e.g.:-
-```bash
-python ./ChromiumSyncEnabler.py
-```
-OR
+Run using python on Mac, e.g.:-
 ```bash
 python3 ./ChromiumSyncEnabler.py
 ```
