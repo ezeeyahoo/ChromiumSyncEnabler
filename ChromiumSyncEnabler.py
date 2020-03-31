@@ -50,8 +50,6 @@ def get_keys(console_msg, lens):
             # Additional check on Google Default Client ID
             if not re.match(
                 r'\d+-[A-Za-z0-9]+\.apps\.googleusercontent\.com$', key
-            ) and not re.match(
-                r'\d{12}\.apps\.googleusercontent\.com$', key
             ):
                 print('Not a valid key')
                 continue
@@ -138,8 +136,7 @@ def generate_new_launcher():
     # Enter required keys
     GAK = get_keys('Enter Google API key: ', [39])
 
-    GDCI = get_keys(
-        'Enter Google Default Client ID: ', [39] + list(range(70, 75)))
+    GDCI = get_keys('Enter Google Default Client ID: ', list(range(70, 75)))
 
     GDCS = get_keys('Enter Google Default Client Secret: ', [24])
 
