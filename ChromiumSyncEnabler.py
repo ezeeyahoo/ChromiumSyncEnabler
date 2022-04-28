@@ -141,7 +141,7 @@ def generate_new_launcher():
     GDCI = get_keys(
         'Enter Google Default Client ID: ', [39] + list(range(70, 75)))
 
-    GDCS = get_keys('Enter Google Default Client Secret: ', [24])
+    GDCS = get_keys('Enter Google Default Client Secret: ', [24] + list(range(11, 14)))
 
     app_bin = os.path.join(*[x for sublist in app_bin for x in sublist])
 
